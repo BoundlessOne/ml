@@ -1,0 +1,128 @@
+Eight Main Steps:
+
+1. Frame the problem and look at the big picture
+
+   A) Define the objective in business terms
+        Determine if an area is worth investing in or not
+   B) How will your solution be used
+        as source data for a machine learning algorithm intended to determine if an area is worth investing in
+   C) What are the current solutions/workarounds (if any?)
+        teams of experts manually collate data to fill in the holes and make judgements
+   D) How should you frame the problem (supervised/unsupervised, online/offline, etc.)?
+        Task is predicting a value, and source data has some points labeled with the target information. Therefore
+        the problem should be framed as a supervised learning task / multiple , univariate regression
+        batching is fine since continous data isn't available (census every decade)
+   E) How should performance be measured?
+        A typical measure of performance for regression problems is the Root Mean Square Error,
+        which yields a metric of how much error the system typically makes in it's predictions
+        In data sets which exhibit many outlier districts, the Mean Absolute Error, aka, the average absolute derivation may be better
+   F) Is the performance measure aligned with the business objective?
+   G) What should be the minimum performance needed to reach the business objective?
+   H) What are the comparable problems? Can you reuse experience or tools?
+   I) Is human expertise available?
+   J) How would you solve the problem manually?
+   K) List the assumptions you (or others) have made so far.
+        We've assumed that the prices will be used to the dollar and high accuracy is needed. Classification would not feature these, for example.
+
+2. Get the data
+
+   A) List the data you need and how much you need.
+   B) Find and document where you can get the data.
+   C) Check how much space it will take
+   D) Check legal obligations and get authorization if necessary
+   E) Create a workspace (with enough storage space)
+   F) Get the data
+   G) Convert the data to a format you can easily manipulate (without changing the data itself)
+   H) Ensure sensitive information is deleted or protected
+   I) Check the size and type of data (time series, sample, geographical, etc)
+   J) Sample a test set, put it aside, and never look at it (no data snooping)
+
+3. Explore the data to gain insights
+
+   A) Create a copy of the data for exploration (sampling it down to a manageable size if necessary)
+   B) Create a Jupyter notebook to keep a record of your data exploration
+   C) Study each attribute and it's characteristics
+       -Name
+       -type (categorial int, bounded/unbounded, text, structured, etc)
+       -% missing values
+       -Noisiness and type of noise (stochastic, outliers, rounding errors, etc)
+       -Usefulness for the task
+       -Type of distribution (gaussian, uniform, logarithmic, etc)
+       -For supervised learning tasks, identify target attributes
+       -Visualize the data
+       -Study the correlations between attributes
+       -Study how you would solve the problem manually
+       -identify the promising transformations you may want to apply
+       -Identify extra data that would be useful
+       -Document what you have learned
+
+4. Prepare the data to better expose the underlying data patterns to machine learning algorithms
+
+   A) Work on copies of the data (keep the original dataset intact)
+   B) Write functions for all data transformations you apply, for five reasons:
+       a) So you can easily prepare the data next time you get a fresh dataset
+       b) So you can apply these transformations in future projects
+       c) To clean and prepare the test set
+       d) To clean and prepare new data instances once your solution is live
+       e) To make it easy to treat your preparation choices as hyperparameters
+   1) Data cleaning
+       -Fix or remove outliers (optional)
+       -Fill in missing values or drop their rows / columns
+   2) Feature selection (optional)
+       -Drop the attributes which provide no useful information for the task
+   3) Feature engineering, where appropriate:
+       -Discretize continuous features
+       -Decompose features
+       -Add promising transformations of features (log(x), sqrt(x), x^2, etc)
+       -aggregate features into promising new features
+   4) Feature scaling:
+       -Standardize or normalize features
+
+5. Explore many different models and shortlist the best one.
+
+   A) If the data is huge, you may wat to sample smaller training sets o you can train many different models in a reasonable time
+   (be aware, this penalizes complex models such as large neural nets or Random Forests)
+   B)Try to automate the following steps as much as possible
+       -Train many quick-and-dirty models from different categories (e.g., linear, naive bayes, svm, random forest neural net, etc) using standard parameters
+       -Measure and compare their performance
+           --For each model, use N-fold cross-validation and compute the mean and standard deviation of the performance measure on the N folds
+   C) Analyze the most significant variables for each algorithm
+   D) Analyze the types of errors the models make
+       -What data would a human have used to avoid these errors?
+   E) Perform a quick round of feature selection and engineering
+   F) Perform one or two more quick iterations of the five previous steps
+   G) Shortlist the top three to five most promising models, preferring models which make different types of errors
+
+6. Fine-tune your models and combine them into a great solution.
+
+   - Use as much data as possible for this step, as you move toward the end of fine-tuning
+   - As always, automate where possible.
+   A) Fine-tune the hyperparameters using cross-validation
+       -- Treat your data transformation choices as hyperparameters, especially when you are not sure about them
+       (e.g. if you're not sure whether to replace missing values with zeros or with median value, or to just drop the rows)
+       -- Unless there are very few hyperparameter values to explore, prefer random search over grid search.
+       If training is very long, you may prefer a bayesian optimization approach (using gaussian process priors)
+   B) Try ensemble methods. Combining your best models will often produce better performance than running them individually
+   C) Once you are confident about your final model, measure it's performance on the test set to estimate the generalization error
+
+7. Present your solution
+
+   A) Document what you have done
+   2) Create a nice presentation
+       -Make sure you highlight the big picture first
+   3) Explain why your solution achieves the business objective
+   4) Don't forget to present interesting points you noticed along the way
+       -Describe what worked and what did not
+       -List our assumption and the systems limitations
+   5) Ensure your key findings are communicated through beautiful visualizations or easy-to-remember statements
+   (e.g., "The median income is the number-one predictor of housing prices"
+
+8. Launch, Monitor, and Maintain your system.
+
+   A) Get your solution ready for production (plug into production data inputs write unit tests, etc)
+   B) Write monitoring code to check your systems' live performance at regular intervals and trigger alerts when it drops
+       - Beware of slow degradation: Models tend to "rot" as data evolves.
+       - Measuring performance may require a human pipeline (e.g., via a crowd-sourcing service)
+       - Monitor your inputs' quality (e.g., a malfunctioning sensor sending random values, or another teams' output becoming stale)
+       this is particularly important for your online learning systems.
+   C) Retrain your model on a regular basis on fresh data (automate as much as possible)
