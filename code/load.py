@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib
 import matplotlib.pyplot as plt
 
-housing_Path = os.path.join("../../../Desktop/crybaby/datasets", "housing")
+housing_Path = os.path.join("datasets", "housing")
 
 def load_housing_data(housing_path=housing_Path):
     csv_path = os.path.join(housing_path, "housing.csv")

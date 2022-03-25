@@ -3,7 +3,7 @@ import tarfile
 import urllib.request
 
 download_Root = "https://github.com/ageron/handson-ml2/blob/master/" # this line had to be edited with githubs modified url format
-housing_Path = os.path.join("../../../Desktop/crybaby/datasets", "housing")
+housing_Path = os.path.join("datasets", "housing")
 housing_Url = download_Root + "datasets/housing/housing.tgz?raw=true" # this as well, from the original textbook
 
 def fetch_housing_data(housing_url=housing_Url, housing_path = housing_Path):
