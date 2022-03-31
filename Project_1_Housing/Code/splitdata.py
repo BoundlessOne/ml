@@ -86,7 +86,7 @@ def save_me_csv(your_Data):
 
 #all good! lets dig into some analysis
 
-data.plot(kind="scatter", x="longitude", y="latitude")
-plt.show()
+#data.plot(kind="scatter", x="longitude", y="latitude", alpha =0.1)
+#plt.show()
 
 
