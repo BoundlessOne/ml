@@ -1,6 +1,10 @@
+import numpy
 import numpy as np
 import pandas as pd
 import os
+
+import pandas.core.frame
+
 from load import *
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import StratifiedShuffleSplit
@@ -50,5 +54,39 @@ for train_index, test_index in split.split(data, data["income_cat"]):
 #remove the income_cat to return data to original state
 
 #for set_ in (strat_train_set, strat_test_set):
-    set_.drop("income_cat", axis=1, inplace=True)
+    #set_.drop("income_cat", axis=1, inplace=True)
+
+#save a copy of these training sets and test sets, and even the indexes for posterity and reproducibility!
+def save_me_csv(your_Data):
+    ''' copy ur stuff to csv for posterity. requires pandas '''
+    import pandas as pd
+    import numpy as np
+    file_name = str(input("Enter desired CSV filename:"))
+    csv_name = file_name + ".csv"
+    if type(your_Data) == pandas.core.frame.DataFrame:
+        try:
+            your_Data.to_csv(csv_name, index = True)
+            print("File saved")
+        except:
+            print("Something went wrong.....")
+    elif type(your_Data == numpy.ndarray):
+        try:
+            df_data = pd.DataFrame(your_Data)
+            df_data.to_csv(csv_name)
+            print("File saved")
+        except:
+            print("Something went wrong.....")
+    else:
+        print("variable type mismatch, babe. Or hell, maybe something else?")
+
+#save_me_csv(train_index)
+#save_me_csv(test_index)
+#save_me_csv(train_set)
+#save_me_csv(test_set)
+
+#all good! lets dig into some analysis
+
+data.plot(kind="scatter", x="longitude", y="latitude")
+plt.show()
+
 
