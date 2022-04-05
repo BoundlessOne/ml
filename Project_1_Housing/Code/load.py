@@ -12,6 +12,13 @@ def load_housing_data(housing_path=housing_Path):
     #housing_dataframe = pd.DataFrame(csv_path,)
     return data
 
+#generalized data import
+def load_data(path):
+    data = pd.read_csv(path)
+    return data
+
+
+
 #see all columns, please
 #pd.set_option('display.max_columns', None)
 #housing = load_housing_data()
