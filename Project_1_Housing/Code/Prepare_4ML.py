@@ -39,7 +39,9 @@ d_data = data.drop("median_house_value", axis = 1)
 data_labels = data["median_house_value"].copy(deep=True)
 dl = pd.DataFrame(data = data_labels)
 
-save_me_csv(dl)
+#save_me_csv(dl)
+
+### Success ###
 
 # d_data.dropna(subset=["total_bedrooms"]) # Option 1, remove the entire district (row) with a missing bedroom value
 # d_data.drop("total_bedrooms", axis=1) # Option 2, nuclear, remove the entire attribute
@@ -50,13 +52,13 @@ imputer = SimpleImputer(strategy="median")
 # we will run it on the whole thing to ensure no missing values, but we therefore need to drop non numerical data
 d_data_num = d_data.drop("ocean_proximity", axis = 1) # remove entire attribute, no non-numerical data allowed
 
-imputer.fit(d_data_num)
+#imputer.fit(d_data_num)
 
 # The Imputer just calculates the median value of each attribute, which we can also do with .median.values -> confirm
 # print(imputer.statistics_)
 # print(d_data_num.median().values)
 
-X = imputer.transform(d_data_num)
+#X = imputer.transform(d_data_num)
 # outputs numpy array of transformed features (must restore dataframe format)
 #d_tr = pd.DataFrame(X, columns=d_data_num.columns, index=d_data_num.index)
 #print(d_tr)
@@ -123,3 +125,12 @@ data_prepared = full_pipeline.fit_transform(data) ### Here is the culmination ##
 ### success save ###
 #save_me_csv(data_prepared)
 
+lin_reg = LinearRegression()
+lin_reg.fit(data_prepared, data_labels)
+
+some_data = data_prepared[:5]
+some_labels = data_labels[:5]
+some_pata = full_pipeline.transform(some_data)
+
+print("Predictions:", lin_reg.predict(some_pata))
+print("Labels:", list(some_labels))
