@@ -14,6 +14,10 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
+from sklearn.tree import DecisionTreeRegressor
 
 
 import numpy as np
@@ -126,3 +130,28 @@ full_pipeline = ColumnTransformer([
 
 housing_prepared = full_pipeline.fit_transform(housing)
 
+lin_reg = LinearRegression()
+lin_reg.fit(housing_prepared, housing_labels)
+LinearRegression()
+
+# let's try the full preprocessing pipeline on a few training instances
+# some_data = housing.iloc[:5]
+# some_labels = housing_labels.iloc[:5]
+# some_data_prepared = full_pipeline.transform(some_data)
+
+linear_predictions = lin_reg.predict(housing_prepared)
+lin_mse = mean_squared_error(housing_labels, linear_predictions)
+lin_rmse = np.sqrt(lin_mse)
+print(lin_rmse)
+
+lin_mae = mean_absolute_error(housing_labels, linear_predictions)
+print(lin_mae)
+
+tree_reg = DecisionTreeRegressor(random_state=42)
+tree_reg.fit(housing_prepared, housing_labels)
+DecisionTreeRegressor(random_state=42)
+
+tree_predictions = tree_reg.predict(housing_prepared)
+tree_mse = mean_squared_error(housing_labels, tree_predictions)
+tree_rmse = np.sqrt(tree_mse)
+print(tree_rmse)
