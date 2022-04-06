@@ -4,14 +4,17 @@ import pandas as pd
 
 
 dpath = 'C:\\Users\\Boundless\\PycharmProjects\\ML\\Project_1_Housing\\datasets\\housing\\prepared_data.csv'
-lpath =
+lpath = "C:\\Users\\Boundless\\PycharmProjects\\ML\\Project_1_Housing\\datasets\\housing\\data_labels.csv"
 
-pata = load_data(path)
-pata_labels = load_data()
-print(pata)
-print(pata.columns)
+pata = load_data(dpath)
+pata_labels = load_data(lpath)
+print(type(pata_labels))
+print(pata_labels.columns)
 
 
 lin_reg = LinearRegression()
 lin_reg.fit(pata, pata_labels)
 
+some_data = pata.iloc[:5]
+some_labels = pata_labels.iloc[:5]
+some_pata = full_pipeline.transform

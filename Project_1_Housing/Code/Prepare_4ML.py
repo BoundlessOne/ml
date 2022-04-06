@@ -13,6 +13,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LinearRegression
 
 # C:\Users\Boundless\PycharmProjects\ML\Project_1_Housing\datasets\housing\Data_Index_bck
 
@@ -121,3 +122,4 @@ data_prepared = full_pipeline.fit_transform(data) ### Here is the culmination ##
 
 ### success save ###
 #save_me_csv(data_prepared)
+
